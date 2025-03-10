@@ -1,0 +1,37 @@
+name: Sync Fork Weekly
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Ejecuta todos los domingos a las 00:00 UTC
+
+jobs:
+  sync-fork:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Clona todo el historial de git
+
+      - name: Configurar upstream
+        run: |
+          echo "🔄 Configurando el remoto 'upstream'..."
+          git remote add upstream https://github.com/anuraghazra/github-readme-stats.git
+          echo "✅ Remoto 'upstream' configurado correctamente."
+
+      - name: Sincronizar cambios
+        run: |
+          echo "🔄 Sincronizando cambios desde el repositorio original..."
+          git fetch upstream
+          echo "✅ Cambios descargados desde 'upstream/master'."
+
+          echo "🔄 Cambiando a la rama 'master'..."
+          git checkout master
+          echo "✅ Rama 'master' seleccionada."
+
+          echo "🔄 Fusionando cambios desde 'upstream/master'..."
+          git merge upstream/master
+          echo "✅ Cambios fusionados correctamente."
+
+          echo "🔄 Enviando cambios a tu fork..."
+          git push origin master
+          echo "✅ Cambios enviados a tu fork (rama 'master')."
