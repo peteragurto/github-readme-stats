@@ -1,7 +1,7 @@
 name: Sync Fork Weekly
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Ejecuta todos los domingos a las 00:00 UTC
+    - cron: "0 0 * * 0" # Ejecuta todos los domingos a las 00:00 UTC
 
 jobs:
   sync-fork:
@@ -10,7 +10,7 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Clona todo el historial de git
+          fetch-depth: 0 # Clona todo el historial de git
 
       - name: Configurar upstream
         run: |
