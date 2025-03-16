@@ -19,22 +19,28 @@ jobs:
           git config --global user.name "peteragurto"
           echo "✅ Identidad Git configurada"
 
+          # Configurar remoto origin con credenciales
+          git remote set-url origin https://peteragurto:${{ secrets.PAT }}@github.com/peteragurto/github-readme-stats.git
+
           # Configurar el remoto upstream
           git remote add upstream https://github.com/anuraghazra/github-readme-stats.git
-          echo "✅ Remoto 'upstream' configurado"
+          echo "✅ Remotos configurados"
 
-          # Sincronizar cambios
-          git fetch upstream
-          echo "✅ Cambios descargados desde 'upstream/master'"
+          # Obtener todos los cambios remotos
+          git fetch --all
+          echo "✅ Todos los cambios remotos descargados"
 
+          # Asegurar que estamos en master
           git checkout master
-          echo "✅ Rama 'master' seleccionada"
 
-          # Usar la identidad configurada para el merge
-          git merge upstream/master
-          echo "✅ Cambios fusionados correctamente"
+          # Primero, asegurarnos de tener los últimos cambios de nuestro fork
+          git pull origin master
+          echo "✅ Cambios locales sincronizados con origen"
 
-          # Enviar los cambios a origin/master usando el PAT para autenticación
-          git remote set-url origin https://peteragurto:${{ secrets.PAT }}@github.com/peteragurto/github-readme-stats.git
+          # Ahora fusionar cambios desde upstream
+          git merge upstream/master -m "Sync fork with upstream/master"
+          echo "✅ Cambios de upstream fusionados"
+
+          # Enviar los cambios a nuestro fork
           git push origin master
           echo "✅ Cambios enviados a tu fork"
