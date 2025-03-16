@@ -2,7 +2,6 @@ name: Sync Fork Weekly
 on:
   schedule:
     - cron: "0 0 * * 0" # Ejecuta todos los domingos a las 00:00 UTC
-
 jobs:
   sync-fork:
     runs-on: ubuntu-latest
@@ -11,22 +10,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Clona todo el historial de git
-
       - name: Configurar identidad de Git
         run: |
           echo "🔄 Configurando identidad global de Git"
           git config --global user.name "peteragurto"
           git config --global user.email "130622718+peteragurto@users.noreply.github.com"
           echo "✅ Identidad global configurada."
-      
       - name: Configurar upstream
         run: |
           echo "🔄 Configurando el remoto 'upstream'..."
           git remote add upstream https://github.com/anuraghazra/github-readme-stats.git
           echo "✅ Remoto 'upstream' configurado correctamente."
-
       - name: Sincronizar cambios
-        run: |
+        run: |-
           echo "🔄 Sincronizando cambios desde el repositorio original..."
           git fetch upstream
           echo "✅ Cambios descargados desde 'upstream/master'."
