@@ -3,7 +3,6 @@ on:
   schedule:
     - cron: "0 0 * * 0" # Ejecuta todos los domingos a las 00:00 UTC
   workflow_dispatch: # Permite ejecutar el workflow manualmente
-
 jobs:
   sync-fork:
     runs-on: ubuntu-latest
@@ -13,29 +12,28 @@ jobs:
         with:
           fetch-depth: 0 # Clona todo el historial de git
           token: ${{ secrets.PAT }} # Usar tu PAT para el checkout
-          
       - name: Sincronizar fork con upstream
-        run: |
+        run: |-
           # Configurar identidad de Git
           git config --global user.email "130622718+peteragurto@users.noreply.github.com"
           git config --global user.name "peteragurto"
           echo "✅ Identidad Git configurada"
-          
+
           # Configurar el remoto upstream
           git remote add upstream https://github.com/anuraghazra/github-readme-stats.git
           echo "✅ Remoto 'upstream' configurado"
-          
+
           # Sincronizar cambios
           git fetch upstream
           echo "✅ Cambios descargados desde 'upstream/master'"
-          
+
           git checkout master
           echo "✅ Rama 'master' seleccionada"
-          
+
           # Usar la identidad configurada para el merge
           git merge upstream/master
           echo "✅ Cambios fusionados correctamente"
-          
+
           # Enviar los cambios a origin/master usando el PAT para autenticación
           git remote set-url origin https://peteragurto:${{ secrets.PAT }}@github.com/peteragurto/github-readme-stats.git
           git push origin master
