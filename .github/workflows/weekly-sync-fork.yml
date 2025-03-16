@@ -20,6 +20,10 @@ jobs:
 
       - name: Sincronizar cambios
         run: |
+          # Configurar identidad de Git (¡NUEVAS LÍNEAS AÑADIDAS!)
+          git config --global user.name "peteragurto"
+          git config --global user.email "130622718+peteragurto@users.noreply.github.com."
+
           echo "🔄 Sincronizando cambios desde el repositorio original..."
           git fetch upstream
           echo "✅ Cambios descargados desde 'upstream/master'."
