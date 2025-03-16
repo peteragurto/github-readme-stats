@@ -13,8 +13,8 @@ jobs:
       - name: Configurar identidad de Git
         run: |
           echo "🔄 Configurando identidad global de Git"
-          git config --global user.name "peteragurto"
           git config --global user.email "130622718+peteragurto@users.noreply.github.com"
+          git config --global user.name "peteragurto"
           echo "✅ Identidad global configurada."
       - name: Configurar upstream
         run: |
