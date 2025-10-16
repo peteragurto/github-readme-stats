@@ -1,7 +1,7 @@
 // @ts-check
 
 import { renderWakatimeCard } from "../src/cards/wakatime.js";
-import { parseArray, parseBoolean, renderError } from "../src/common/utils.js";
+import { renderError } from "../src/common/render.js";
 import { fetchWakatimeStats } from "../src/fetchers/wakatime.js";
 import { isLocaleAvailable } from "../src/translations.js";
 import {
@@ -11,7 +11,11 @@ import {
   setErrorCacheHeaders,
 } from "../src/common/cache.js";
 import { guardAccess } from "../src/common/access.js";
-import { retrieveSecondaryMessage } from "../src/common/error.js";
+import {
+  MissingParamError,
+  retrieveSecondaryMessage,
+} from "../src/common/error.js";
+import { parseArray, parseBoolean } from "../src/common/ops.js";
 
 // @ts-ignore
 export default async (req, res) => {
@@ -121,6 +125,7 @@ export default async (req, res) => {
             bg_color,
             border_color,
             theme,
+            show_repo_link: !(err instanceof MissingParamError),
           },
         }),
       );

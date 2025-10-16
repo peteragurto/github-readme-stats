@@ -6,7 +6,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import pin from "../api/pin.js";
 import { renderRepoCard } from "../src/cards/repo.js";
-import { renderError } from "../src/common/utils.js";
+import { renderError } from "../src/common/render.js";
 import { CACHE_TTL, DURATIONS } from "../src/common/cache.js";
 
 const data_repo = {
@@ -212,6 +212,7 @@ describe("Test /api/pin", () => {
         message:
           'Missing params "username", "repo" make sure you pass the parameters in URL',
         secondaryMessage: "/api/pin?username=USERNAME&amp;repo=REPO_NAME",
+        renderOptions: { show_repo_link: false },
       }),
     );
   });
